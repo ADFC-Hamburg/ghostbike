@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+piccolo
+piccolo-admin
+asyncpg
