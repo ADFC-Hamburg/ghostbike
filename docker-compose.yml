@@ -1,4 +1,4 @@
-version: "3.9"
+
 
 services:
   web:
@@ -8,8 +8,8 @@ services:
     depends_on:
       - db
     environment:
-      - PICCOLO_CONF=piccolo_conf
-      - GHOSTBIKE_DB_ENGINE: postgres
+      PICCOLO_CONF: piccolo_conf
+      GHOSTBIKE_DB_ENGINE: postgres
   db:
     image: postgres:15
     environment:
