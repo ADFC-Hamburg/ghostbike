@@ -7,7 +7,9 @@ RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/ap
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY ghostbike ghostbike
+COPY piccolo_conf.py .
+COPY start.sh .
 RUN chmod +x start.sh
 CMD ["./start.sh"]
 

@@ -34,7 +34,7 @@ class StreetType(Table):
 class AccidentType(Table):
     id = Serial(primary_key=True)
     key = Varchar(length=9, unique=True)
-    name = Varchar(length=30, unique=True)
+    name = Varchar(length=80, unique=True)
 
     @classmethod
     def get_readable(cls):
@@ -43,8 +43,8 @@ class AccidentType(Table):
 
 class LocationType(Table):
     id = Serial(primary_key=True)
-    key = Varchar(length=3, unique=True)
-    name = Varchar(length=50, unique=True)
+    key = Varchar(length=1, unique=True)
+    name = Varchar(length=20, unique=True)
 
     @classmethod
     def get_readable(cls):
@@ -53,8 +53,8 @@ class LocationType(Table):
 
 class Opponent(Table):
     id = Serial(primary_key=True)
-    key = Varchar(length=1, unique=True)
-    name = Varchar(length=30, unique=True)
+    key = Varchar(length=10, unique=True)
+    name = Varchar(length=20, unique=True)
 
     @classmethod
     def get_readable(cls):
@@ -73,8 +73,8 @@ class Infrastructure(Table):
 
 class MainFault(Table):
     id = Serial(primary_key=True)
-    key = Varchar(length=10, unique=True)
-    name = Varchar(length=90, unique=True)
+    key = Varchar(length=1, unique=True)
+    name = Varchar(length=30, unique=True)
 
     @classmethod
     def get_readable(cls):
@@ -88,7 +88,7 @@ class AccidentCode(Table):
 
     @classmethod
     def get_readable(cls):
-        return Readable(template="%d - %s", columns=[cls.code, cls.name])
+        return Readable(template="%s - %s", columns=[cls.code, cls.name])
 
 
 class Guardian(Table):
@@ -106,26 +106,26 @@ class Ghostbike(Table):
     id = Serial(primary_key=True)
 
     accident_date = Date()
-    death_date = Date()  # Optional, for deceased victims
-    radunfall_index = Varchar(length=8)
-    address = Varchar(length=200, null=True)
+    death_date = Date(null=True)  # Optional, for deceased victims
+    radunfall_index = Varchar(length=8, null=True, unique=True)
+    address = Varchar(length=200)
     postal_code = Varchar(length=6, null=True)
-    location = Varchar(length=100)
+    location = Varchar(length=100, default="")
     location_population = BigInt(null=True)
-    street_type = ForeignKey(references=StreetType)
-    accident_type = ForeignKey(references=AccidentType)
-    location_type = ForeignKey(references=LocationType)
-    comment = Varchar(length=500, null=True)
-    gender = Varchar(length=1, choices=Gender)
+    street_type = ForeignKey(references=StreetType, null=True)
+    accident_type = ForeignKey(references=AccidentType, null=True)
+    location_type = ForeignKey(references=LocationType, null=True)
+    accident_description = Varchar(length=500, null=True)
+    gender = Varchar(length=1, choices=Gender, null=True)
     age = Integer(null=True)
     pedelec = Boolean(null=True)
-    opponent = ForeignKey(references=Opponent)
-    infrastructure = ForeignKey(references=Infrastructure)
-    main_fault = ForeignKey(references=MainFault)
-    accident_code = ForeignKey(references=AccidentCode)
+    opponent = ForeignKey(references=Opponent, null=True)
+    infrastructure = ForeignKey(references=Infrastructure, null=True)
+    main_fault = ForeignKey(references=MainFault, null=True)
+    accident_code = ForeignKey(references=AccidentCode, null=True)
     status = Integer(length=1, choices=StatusEnum, default=StatusEnum.okay)
     status_text = Varchar(length=20, null=True)
-    status_checked_date = Date()
+    status_checked_date = Date(null=True)
     latitude = DoublePrecision(null=True)
     longitude = DoublePrecision(null=True)
     osm_memorial_id = BigInt(
@@ -151,10 +151,10 @@ class GuardianGhostbike(Table):
 
 class NewspaperArticle(Table):
     id = Serial(primary_key=True)
-    title = Varchar(length=200)
+    title = Varchar(length=200, null=True)
     ghostbike = ForeignKey(references=Ghostbike)
     medium = ForeignKey(references="NewspaperMedium")
-    author = Varchar(length=100)
+    author = Varchar(length=100, null=True)
     url = Varchar(length=200)
     content = Text()
     date = Date()
@@ -162,7 +162,7 @@ class NewspaperArticle(Table):
 
     @classmethod
     def get_readable(cls):
-        return Readable(template="%s - %s", columns=[cls.date, cls.title])
+        return Readable(template="%s - %s", columns=[cls.medium, cls.url])
 
 
 class NewspaperMedium(Table):

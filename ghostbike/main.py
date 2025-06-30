@@ -4,15 +4,17 @@ from ghostbike.routes import router
 from piccolo_admin.endpoints import create_admin, TableConfig
 from contextlib import asynccontextmanager
 from piccolo.conf.apps import AppRegistry
-from ghostbike.tables import Ghostbike,  User, Guardian, Sessions, Infrastructure, MainFault, AccidentType, LocationType, Opponent, StreetType, NewspaperArticle, NewspaperMedium
+from ghostbike.tables import Ghostbike,  User, Guardian, Sessions, Infrastructure, MainFault, AccidentType, LocationType, Opponent, StreetType, NewspaperArticle, NewspaperMedium, AccidentCode
 from piccolo_conf import DB
-from ghostbike.db_init import initialize_default_data
+from ghostbike.db_init import initialize_all_data
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    await initialize_default_data()
+    json_file_path = os.getenv(
+        "GHOSTBIKE_JSON_PATH", "Ghostbike-Hamburg-Tabelle.json")
+    await initialize_all_data(json_file_path if os.path.exists(json_file_path) else None)
     yield
     # Shutdown (falls nötig)
 
@@ -46,16 +48,18 @@ tables = [
     TableConfig(
         table_class=Ghostbike,
         visible_columns=[
-            Ghostbike.death_date if hasattr(
-                Ghostbike, 'death_date') else Ghostbike.date,
+            Ghostbike.accident_date,
             Ghostbike.age,
-            Ghostbike.postal_code
+            Ghostbike.postal_code,
+            Ghostbike.address,
+            Ghostbike.radunfall_index,
         ],
         visible_filters=[
-            Ghostbike.death_date if hasattr(
-                Ghostbike, 'death_date') else Ghostbike.date,
+            Ghostbike.accident_date,
             Ghostbike.age,
-            Ghostbike.postal_code
+            Ghostbike.postal_code,
+            Ghostbike.address,
+            Ghostbike.radunfall_index,
         ],
     ),
     TableConfig(
@@ -135,14 +139,13 @@ tables = [
         # Assuming you renamed PressRelease to NewspaperArticle
         table_class=NewspaperArticle,
         visible_columns=[
-            NewspaperArticle.title,
+            NewspaperArticle.ghostbike,
             NewspaperArticle.medium,
-            NewspaperArticle.date,
+            NewspaperArticle.url
         ],
         visible_filters=[
-            NewspaperArticle.title,
+            NewspaperArticle.ghostbike,
             NewspaperArticle.medium,
-            NewspaperArticle.date,
         ]
     ),
     TableConfig(
@@ -150,6 +153,12 @@ tables = [
         menu_group="Lookup-Tabellen",
         visible_columns=[NewspaperMedium.name],
         visible_filters=[NewspaperMedium.name]
+    ),
+    TableConfig(
+        table_class=AccidentCode,
+        menu_group="Lookup-Tabellen",
+        visible_columns=[AccidentCode.code, AccidentCode.name],
+        visible_filters=[AccidentCode.code, AccidentCode.name]
     ),
 ]
 
