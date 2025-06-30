@@ -4,12 +4,14 @@ services:
   web:
     build: .
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8100:8100"
     depends_on:
       - db
     environment:
       PICCOLO_CONF: piccolo_conf
       GHOSTBIKE_DB_ENGINE: postgres
+    volumes:
+      - ./Ghostbike-Hamburg-Tabelle.json:/app/Ghostbike-Hamburg-Tabelle.json:ro
   db:
     image: postgres:15
     environment:

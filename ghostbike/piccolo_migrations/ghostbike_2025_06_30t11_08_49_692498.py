@@ -138,7 +138,7 @@ class StreetType(Table, tablename="street_type", schema=None):
     )
 
 
-ID = "2025-06-30T10:49:39:887494"
+ID = "2025-06-30T11:08:49:692498"
 VERSION = "1.27.1"
 DESCRIPTION = ""
 
@@ -149,8 +149,12 @@ async def forwards():
     )
 
     manager.add_table(
-        class_name="StreetType",
-        tablename="street_type",
+        class_name="MainFault", tablename="main_fault", schema=None, columns=None
+    )
+
+    manager.add_table(
+        class_name="AccidentCode",
+        tablename="accident_code",
         schema=None,
         columns=None,
     )
@@ -163,21 +167,6 @@ async def forwards():
     )
 
     manager.add_table(
-        class_name="MainFault", tablename="main_fault", schema=None, columns=None
-    )
-
-    manager.add_table(
-        class_name="NewspaperMedium",
-        tablename="newspaper_medium",
-        schema=None,
-        columns=None,
-    )
-
-    manager.add_table(
-        class_name="Guardian", tablename="guardian", schema=None, columns=None
-    )
-
-    manager.add_table(
         class_name="GuardianGhostbike",
         tablename="guardian_ghostbike",
         schema=None,
@@ -185,15 +174,8 @@ async def forwards():
     )
 
     manager.add_table(
-        class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        schema=None,
-        columns=None,
-    )
-
-    manager.add_table(
-        class_name="AccidentCode",
-        tablename="accident_code",
+        class_name="AccidentType",
+        tablename="accident_type",
         schema=None,
         columns=None,
     )
@@ -218,142 +200,32 @@ async def forwards():
     )
 
     manager.add_table(
-        class_name="AccidentType",
-        tablename="accident_type",
+        class_name="Ghostbike", tablename="ghostbike", schema=None, columns=None
+    )
+
+    manager.add_table(
+        class_name="NewspaperMedium",
+        tablename="newspaper_medium",
         schema=None,
         columns=None,
     )
 
     manager.add_table(
-        class_name="Ghostbike", tablename="ghostbike", schema=None, columns=None
-    )
-
-    manager.add_column(
-        table_class_name="StreetType",
+        class_name="StreetType",
         tablename="street_type",
-        column_name="id",
-        db_column_name="id",
-        column_class_name="Serial",
-        column_class=Serial,
-        params={
-            "null": False,
-            "primary_key": True,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
         schema=None,
+        columns=None,
     )
 
-    manager.add_column(
-        table_class_name="StreetType",
-        tablename="street_type",
-        column_name="key",
-        db_column_name="key",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 2,
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": True,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
+    manager.add_table(
+        class_name="NewspaperArticle",
+        tablename="newspaper_article",
         schema=None,
+        columns=None,
     )
 
-    manager.add_column(
-        table_class_name="StreetType",
-        tablename="street_type",
-        column_name="name",
-        db_column_name="name",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 40,
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": True,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="LocationType",
-        tablename="location_type",
-        column_name="id",
-        db_column_name="id",
-        column_class_name="Serial",
-        column_class=Serial,
-        params={
-            "null": False,
-            "primary_key": True,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="LocationType",
-        tablename="location_type",
-        column_name="key",
-        db_column_name="key",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 1,
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": True,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="LocationType",
-        tablename="location_type",
-        column_name="name",
-        db_column_name="name",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 20,
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": True,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
+    manager.add_table(
+        class_name="Guardian", tablename="guardian", schema=None, columns=None
     )
 
     manager.add_column(
@@ -421,13 +293,14 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="NewspaperMedium",
-        tablename="newspaper_medium",
-        column_name="id",
-        db_column_name="id",
-        column_class_name="Serial",
-        column_class=Serial,
+        table_class_name="AccidentCode",
+        tablename="accident_code",
+        column_name="code",
+        db_column_name="code",
+        column_class_name="Integer",
+        column_class=Integer,
         params={
+            "default": 0,
             "null": False,
             "primary_key": True,
             "unique": False,
@@ -441,8 +314,8 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="NewspaperMedium",
-        tablename="newspaper_medium",
+        table_class_name="AccidentCode",
+        tablename="accident_code",
         column_name="name",
         db_column_name="name",
         column_class_name="Varchar",
@@ -463,15 +336,14 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="NewspaperMedium",
-        tablename="newspaper_medium",
-        column_name="url",
-        db_column_name="url",
-        column_class_name="Varchar",
-        column_class=Varchar,
+        table_class_name="AccidentCode",
+        tablename="accident_code",
+        column_name="img",
+        db_column_name="img",
+        column_class_name="Bytea",
+        column_class=Bytea,
         params={
-            "length": 200,
-            "default": "",
+            "default": b"",
             "null": True,
             "primary_key": False,
             "unique": False,
@@ -485,8 +357,8 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="Guardian",
-        tablename="guardian",
+        table_class_name="LocationType",
+        tablename="location_type",
         column_name="id",
         db_column_name="id",
         column_class_name="Serial",
@@ -505,14 +377,14 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="Guardian",
-        tablename="guardian",
-        column_name="name",
-        db_column_name="name",
+        table_class_name="LocationType",
+        tablename="location_type",
+        column_name="key",
+        db_column_name="key",
         column_class_name="Varchar",
         column_class=Varchar,
         params={
-            "length": 100,
+            "length": 1,
             "default": "",
             "null": False,
             "primary_key": False,
@@ -527,40 +399,18 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="Guardian",
-        tablename="guardian",
-        column_name="email",
-        db_column_name="email",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 100,
-            "default": "",
-            "null": True,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="Guardian",
-        tablename="guardian",
-        column_name="phone",
-        db_column_name="phone",
+        table_class_name="LocationType",
+        tablename="location_type",
+        column_name="name",
+        db_column_name="name",
         column_class_name="Varchar",
         column_class=Varchar,
         params={
             "length": 20,
             "default": "",
-            "null": True,
+            "null": False,
             "primary_key": False,
-            "unique": False,
+            "unique": True,
             "index": False,
             "index_method": IndexMethod.btree,
             "choices": None,
@@ -619,8 +469,8 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
+        table_class_name="AccidentType",
+        tablename="accident_type",
         column_name="id",
         db_column_name="id",
         column_class_name="Serial",
@@ -639,212 +489,14 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="title",
-        db_column_name="title",
+        table_class_name="AccidentType",
+        tablename="accident_type",
+        column_name="key",
+        db_column_name="key",
         column_class_name="Varchar",
         column_class=Varchar,
         params={
-            "length": 200,
-            "default": "",
-            "null": True,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="ghostbike",
-        db_column_name="ghostbike",
-        column_class_name="ForeignKey",
-        column_class=ForeignKey,
-        params={
-            "references": Ghostbike,
-            "on_delete": OnDelete.cascade,
-            "on_update": OnUpdate.cascade,
-            "target_column": None,
-            "null": True,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="medium",
-        db_column_name="medium",
-        column_class_name="ForeignKey",
-        column_class=ForeignKey,
-        params={
-            "references": "NewspaperMedium",
-            "on_delete": OnDelete.cascade,
-            "on_update": OnUpdate.cascade,
-            "target_column": None,
-            "null": True,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="author",
-        db_column_name="author",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 100,
-            "default": "",
-            "null": True,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="url",
-        db_column_name="url",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 200,
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="content",
-        db_column_name="content",
-        column_class_name="Text",
-        column_class=Text,
-        params={
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="date",
-        db_column_name="date",
-        column_class_name="Date",
-        column_class=Date,
-        params={
-            "default": DateNow(),
-            "null": False,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="NewspaperArticle",
-        tablename="newspaper_article",
-        column_name="primary",
-        db_column_name="primary",
-        column_class_name="Boolean",
-        column_class=Boolean,
-        params={
-            "default": False,
-            "null": False,
-            "primary_key": False,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="AccidentCode",
-        tablename="accident_code",
-        column_name="code",
-        db_column_name="code",
-        column_class_name="Integer",
-        column_class=Integer,
-        params={
-            "default": 0,
-            "null": False,
-            "primary_key": True,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="AccidentCode",
-        tablename="accident_code",
-        column_name="name",
-        db_column_name="name",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 100,
+            "length": 9,
             "default": "",
             "null": False,
             "primary_key": False,
@@ -859,17 +511,18 @@ async def forwards():
     )
 
     manager.add_column(
-        table_class_name="AccidentCode",
-        tablename="accident_code",
-        column_name="img",
-        db_column_name="img",
-        column_class_name="Bytea",
-        column_class=Bytea,
+        table_class_name="AccidentType",
+        tablename="accident_type",
+        column_name="name",
+        db_column_name="name",
+        column_class_name="Varchar",
+        column_class=Varchar,
         params={
-            "default": b"",
-            "null": True,
+            "length": 80,
+            "default": "",
+            "null": False,
             "primary_key": False,
-            "unique": False,
+            "unique": True,
             "index": False,
             "index_method": IndexMethod.btree,
             "choices": None,
@@ -1321,70 +974,6 @@ async def forwards():
             "index_method": IndexMethod.btree,
             "choices": None,
             "db_column_name": "id",
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="AccidentType",
-        tablename="accident_type",
-        column_name="id",
-        db_column_name="id",
-        column_class_name="Serial",
-        column_class=Serial,
-        params={
-            "null": False,
-            "primary_key": True,
-            "unique": False,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="AccidentType",
-        tablename="accident_type",
-        column_name="key",
-        db_column_name="key",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 9,
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": True,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
-            "secret": False,
-        },
-        schema=None,
-    )
-
-    manager.add_column(
-        table_class_name="AccidentType",
-        tablename="accident_type",
-        column_name="name",
-        db_column_name="name",
-        column_class_name="Varchar",
-        column_class=Varchar,
-        params={
-            "length": 80,
-            "default": "",
-            "null": False,
-            "primary_key": False,
-            "unique": True,
-            "index": False,
-            "index_method": IndexMethod.btree,
-            "choices": None,
-            "db_column_name": None,
             "secret": False,
         },
         schema=None,
@@ -1937,6 +1526,417 @@ async def forwards():
         params={
             "default": -1,
             "null": False,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperMedium",
+        tablename="newspaper_medium",
+        column_name="id",
+        db_column_name="id",
+        column_class_name="Serial",
+        column_class=Serial,
+        params={
+            "null": False,
+            "primary_key": True,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperMedium",
+        tablename="newspaper_medium",
+        column_name="name",
+        db_column_name="name",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 100,
+            "default": "",
+            "null": False,
+            "primary_key": False,
+            "unique": True,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperMedium",
+        tablename="newspaper_medium",
+        column_name="url",
+        db_column_name="url",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 200,
+            "default": "",
+            "null": True,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="StreetType",
+        tablename="street_type",
+        column_name="id",
+        db_column_name="id",
+        column_class_name="Serial",
+        column_class=Serial,
+        params={
+            "null": False,
+            "primary_key": True,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="StreetType",
+        tablename="street_type",
+        column_name="key",
+        db_column_name="key",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 2,
+            "default": "",
+            "null": False,
+            "primary_key": False,
+            "unique": True,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="StreetType",
+        tablename="street_type",
+        column_name="name",
+        db_column_name="name",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 40,
+            "default": "",
+            "null": False,
+            "primary_key": False,
+            "unique": True,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="id",
+        db_column_name="id",
+        column_class_name="Serial",
+        column_class=Serial,
+        params={
+            "null": False,
+            "primary_key": True,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="title",
+        db_column_name="title",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 200,
+            "default": "",
+            "null": True,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="ghostbike",
+        db_column_name="ghostbike",
+        column_class_name="ForeignKey",
+        column_class=ForeignKey,
+        params={
+            "references": Ghostbike,
+            "on_delete": OnDelete.cascade,
+            "on_update": OnUpdate.cascade,
+            "target_column": None,
+            "null": True,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="medium",
+        db_column_name="medium",
+        column_class_name="ForeignKey",
+        column_class=ForeignKey,
+        params={
+            "references": "NewspaperMedium",
+            "on_delete": OnDelete.cascade,
+            "on_update": OnUpdate.cascade,
+            "target_column": None,
+            "null": True,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="author",
+        db_column_name="author",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 100,
+            "default": "",
+            "null": True,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="url",
+        db_column_name="url",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 200,
+            "default": "",
+            "null": False,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="content",
+        db_column_name="content",
+        column_class_name="Text",
+        column_class=Text,
+        params={
+            "default": "",
+            "null": False,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="date",
+        db_column_name="date",
+        column_class_name="Date",
+        column_class=Date,
+        params={
+            "default": DateNow(),
+            "null": False,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="NewspaperArticle",
+        tablename="newspaper_article",
+        column_name="primary",
+        db_column_name="primary",
+        column_class_name="Boolean",
+        column_class=Boolean,
+        params={
+            "default": False,
+            "null": False,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="Guardian",
+        tablename="guardian",
+        column_name="id",
+        db_column_name="id",
+        column_class_name="Serial",
+        column_class=Serial,
+        params={
+            "null": False,
+            "primary_key": True,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="Guardian",
+        tablename="guardian",
+        column_name="name",
+        db_column_name="name",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 100,
+            "default": "",
+            "null": False,
+            "primary_key": False,
+            "unique": True,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="Guardian",
+        tablename="guardian",
+        column_name="email",
+        db_column_name="email",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 100,
+            "default": "",
+            "null": True,
+            "primary_key": False,
+            "unique": False,
+            "index": False,
+            "index_method": IndexMethod.btree,
+            "choices": None,
+            "db_column_name": None,
+            "secret": False,
+        },
+        schema=None,
+    )
+
+    manager.add_column(
+        table_class_name="Guardian",
+        tablename="guardian",
+        column_name="phone",
+        db_column_name="phone",
+        column_class_name="Varchar",
+        column_class=Varchar,
+        params={
+            "length": 20,
+            "default": "",
+            "null": True,
             "primary_key": False,
             "unique": False,
             "index": False,

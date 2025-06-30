@@ -11,4 +11,4 @@ piccolo migrations forwards all
 echo "Create user"
 piccolo user create --username=admin --email=admin@example.org --is_admin=True --is_superuser=True --is_active=True --password=123456
 echo "Starte API-Server..."
-uvicorn ghostbike.main:app --host 0.0.0.0 --port 8000
+uvicorn ghostbike.main:app --host 0.0.0.0 --port 8100
