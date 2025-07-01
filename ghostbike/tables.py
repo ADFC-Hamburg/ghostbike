@@ -1,6 +1,17 @@
 from enum import Enum
 from piccolo.table import Table
-from piccolo.columns import Varchar, Integer, Date, ForeignKey, Boolean, Text, BigInt, DoublePrecision, Bytea
+from piccolo.columns import (
+    Varchar,
+    Integer,
+    Date,
+    ForeignKey,
+    Boolean,
+    Text,
+    BigInt,
+    DoublePrecision,
+    Bytea,
+    LazyTableReference,
+)
 from piccolo.columns.column_types import Serial
 from piccolo_api.session_auth.tables import SessionsBase
 from piccolo.apps.user.tables import BaseUser
@@ -101,6 +112,8 @@ class Guardian(Table):
     def get_readable(cls):
         return Readable(template="%s", columns=[cls.name])
 
+    ghostbike = M2M(LazyTableReference("GuardianGhostbike", module_path=__name__))
+
 
 class Ghostbike(Table):
     id = Serial(primary_key=True)
@@ -123,13 +136,15 @@ class Ghostbike(Table):
     infrastructure = ForeignKey(references=Infrastructure, null=True)
     main_fault = ForeignKey(references=MainFault, null=True)
     accident_code = ForeignKey(references=AccidentCode, null=True)
-    status = Integer(length=1, choices=StatusEnum, default=StatusEnum.okay)
+    status = Integer(choices=StatusEnum, default=StatusEnum.okay)
     status_text = Varchar(length=20, null=True)
     status_checked_date = Date(null=True)
     latitude = DoublePrecision(null=True)
     longitude = DoublePrecision(null=True)
     osm_memorial_id = BigInt(
-        default=-1, help_text="OpenStreetMap memorial ID, if available")
+        default=-1, help_text="OpenStreetMap memorial ID, if available"
+    )
+    guardians = M2M(LazyTableReference("GuardianGhostbike", module_path=__name__))
 
     def osm_link(self):
         """Get link to OpenStreetMap"""
@@ -137,32 +152,13 @@ class Ghostbike(Table):
 
     def google_link(self):
         """Get link to Google Maps"""
-        return f"https://www.google.de/maps/@{self.latitude},{self.longitude},80m/data=!3m1!1e3!5m1!1e3",
+        return (
+            f"https://www.google.de/maps/@{self.latitude},{self.longitude},80m/data=!3m1!1e3!5m1!1e3",
+        )
 
     @classmethod
     def get_readable(cls):
         return Readable(template="%s - %s", columns=[cls.accident_date, cls.address])
-
-
-class GuardianGhostbike(Table):
-    guardian = ForeignKey(references=Guardian)
-    ghostbike = ForeignKey(references=Ghostbike)
-
-
-class NewspaperArticle(Table):
-    id = Serial(primary_key=True)
-    title = Varchar(length=200, null=True)
-    ghostbike = ForeignKey(references=Ghostbike)
-    medium = ForeignKey(references="NewspaperMedium")
-    author = Varchar(length=100, null=True)
-    url = Varchar(length=200)
-    content = Text()
-    date = Date()
-    primary = Boolean(default=False)
-
-    @classmethod
-    def get_readable(cls):
-        return Readable(template="%s - %s", columns=[cls.medium, cls.url])
 
 
 class NewspaperMedium(Table):
@@ -175,9 +171,25 @@ class NewspaperMedium(Table):
         return Readable(template="%s", columns=[cls.name])
 
 
-# M2M-Beziehungen hinzufügen (nach den Klassendefinitionen)
-Guardian.ghostbikes = M2M(Ghostbike)
-Ghostbike.guardians = M2M(Guardian)
+class NewspaperArticle(Table):
+    id = Serial(primary_key=True)
+    title = Varchar(length=200, null=True)
+    ghostbike = ForeignKey(references=Ghostbike)
+    medium = ForeignKey(references=NewspaperMedium)
+    author = Varchar(length=100, null=True)
+    url = Varchar(length=200)
+    content = Text()
+    date = Date()
+    primary = Boolean(default=False)
+
+    @classmethod
+    def get_readable(cls):
+        return Readable(template="%s - %s", columns=[cls.medium, cls.url])
+
+
+class GuardianGhostbike(Table):
+    guardian = ForeignKey(Guardian)
+    ghostbike = ForeignKey(Ghostbike)
 
 
 class Sessions(SessionsBase):

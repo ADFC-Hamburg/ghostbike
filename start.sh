@@ -9,6 +9,7 @@ echo "Starte Migrationen..."
 piccolo migrations check
 piccolo migrations forwards all
 echo "Create user"
-piccolo user create --username=admin --email=admin@example.org --is_admin=True --is_superuser=True --is_active=True --password=123456
+ADMIN_PASSWORD=$(cat /run/secrets/admin_password || pwgen -s 16)
+piccolo user create --username=admin --email=admin@example.org --is_admin=True --is_superuser=True --is_active=True --password=$ADMIN_PASSWORD
 echo "Starte API-Server..."
-uvicorn ghostbike.main:app --host 0.0.0.0 --port 8100
+uvicorn ghostbike.main:app --host ${WEBSERVER_IP} --port ${WEBSERVER_PORT}
